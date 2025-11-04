@@ -1,17 +1,92 @@
 <!doctype html>
-<html>
+<html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <meta name="theme-color" content="#0a84ff">
-  <link rel="manifest" href="/manifest.json">
-  <title>Monia Application</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+  <!-- Make PWA behave like an app on iOS -->
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <title>PWA with Nav</title>
+
+  <style>
+    :root {
+      --nav-height: 56px; /* visible nav height (not counting safe-area) */
+    }
+
+    /* safe-area helpers for iOS (use constant() for very old iOS) */
+    .app-nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: calc(var(--nav-height) + env(safe-area-inset-top));
+      padding-top: env(safe-area-inset-top);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding-inline: 12px;
+      background: linear-gradient(#fff, #f7f7f7);
+      box-shadow: 0 1px 0 rgba(0,0,0,0.06);
+      z-index: 9999;
+      -webkit-backdrop-filter: blur(6px);
+      backdrop-filter: blur(6px);
+      pointer-events: auto;
+    }
+
+    /* push page content below the nav when in standalone mode */
+    body.standalone {
+      padding-top: calc(var(--nav-height) + env(safe-area-inset-top));
+    }
+
+    /* fallback for browsers that don't support env() (keeps reasonable spacing) */
+    @supports not (padding-top: env(safe-area-inset-top)) {
+      .app-nav { height: var(--nav-height); padding-top: 0; }
+      body.standalone { padding-top: var(--nav-height); }
+    }
+
+    /* simple content area */
+    main {
+      min-height: 200vh;
+      padding: 16px;
+    }
+
+    .nav-title { font-weight: 600; font-size: 18px; }
+    .nav-btn { background: none; border: none; font-size: 30px; }
+  </style>
 </head>
 <body>
-  <h1>Monia Application Here</h1>
-  <p>We will create an application to run on this architecture</p>
-  <p> Natural empire</p>
-  <p>Another Profile Created</p>
-  <script src="/app.js"></script>
+  <header class="app-nav" role="navigation" aria-label="Main navigation">
+    <button class="nav-btn" aria-label="Back">‹</button>
+    <div class="nav-title">App Title</div>
+    <button class="nav-btn" aria-label="Menu">☰</button>
+  </header>
+
+  <main>
+    <h1>Placeholder</h1>
+    <p>Page content goes here. When the PWA is installed to Home Screen on iOS, the nav will respect the notch and status bar safe area.</p>
+  </main>
+
+  <script>
+    // Detect standalone/display-mode (iOS uses window.navigator.standalone, others use display-mode)
+    function isStandalone() {
+      return window.matchMedia && window.matchMedia('(display-mode: standalone)').matches
+             || window.navigator.standalone === true;
+    }
+
+    if (isStandalone()) {
+      document.body.classList.add('standalone');
+    } else {
+      // If you want the same spacing in Safari tab mode, uncomment:
+      // document.body.classList.add('standalone');
+    }
+
+    // Optional: listen for when display-mode changes (useful during dev)
+    window.addEventListener('DOMContentLoaded', () => {
+      window.matchMedia && window.matchMedia('(display-mode: standalone)').addEventListener('change', e => {
+        document.body.classList.toggle('standalone', e.matches);
+      });
+    });
+  </script>
 </body>
 </html>
