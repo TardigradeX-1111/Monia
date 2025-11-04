@@ -1,0 +1,201 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=Playfair+Display:wght@600;800&display=swap');
+
+:root {
+  --nav-height: 56px;
+
+  /* deep Claude-like dark */
+  --bg-start: #070607;
+  --bg-end:   #0f0e0e;
+
+  /* orange accents from your screenshots */
+  --accent-orange: #F07A4C;
+  --accent-orange-2: #E55E3A;
+  --accent-glow: rgba(240,122,76,0.16);
+
+  /* subtle greys for UI */
+  --surface: rgba(255,255,255,0.02);
+  --surface-2: rgba(255,255,255,0.025);
+  --muted: rgba(220,220,220,0.66);
+  --text: #e9e7e5;
+
+  --radius: 20px;
+}
+
+/* base */
+* { box-sizing: border-box; }
+html,body { height: 100%; }
+body {
+  margin: 0;
+  font-family: "Inter", -apple-system, "SF Pro Text", "SF Pro Display", "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  color: var(--text);
+  background: linear-gradient(180deg, var(--bg-start), var(--bg-end));
+  -webkit-font-smoothing: antialiased;
+}
+
+/* hero / centered title */
+.hero {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 18px;
+  margin-top: 48px;
+  color: var(--muted);
+  text-align: center;
+}
+
+.hero-star svg { filter: drop-shadow(0 6px 18px var(--accent-glow)); opacity: 0.98; }
+.hero-title {
+  font-family: "Playfair Display", Georgia, "Times New Roman", serif;
+  font-weight: 700;
+  font-size: 34px;
+  line-height: 1.06;
+  color: #d8d4d1;
+  margin: 0;
+  padding: 0 28px;
+  max-width: 720px;
+  letter-spacing: 0.2px;
+}
+
+/* nav */
+.app-nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: calc(var(--nav-height) + env(safe-area-inset-top));
+  padding-top: env(safe-area-inset-top);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-inline: 14px;
+  background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+  z-index: 9999;
+}
+
+/* title serif look in nav */
+.nav-title {
+  font-family: "Playfair Display", Georgia, serif;
+  font-weight: 600;
+  font-size: 20px;
+  color: #cfcac6;
+  text-align: center;
+}
+
+/* round nav buttons with faint ring */
+.nav-btn {
+  width: 44px; height: 44px;
+  border-radius: 9999px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(180deg,var(--surface),var(--surface-2));
+  border: 1px solid rgba(255,255,255,0.03);
+  box-shadow: 0 6px 18px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,255,255,0.015);
+  color: var(--muted);
+}
+
+/* avatar / ghost icon style */
+.nav-btn[aria-label="Menu"] { color: var(--muted); }
+
+/* composer (bottom input) */
+.composer {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: env(safe-area-inset-bottom, 12px);
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  gap: 14px;
+  padding: 12px;
+  z-index: 9999;
+}
+
+/* the pill input */
+.composer-pill {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: calc(100% - 88px);
+  max-width: 920px;
+  background: linear-gradient(180deg, rgba(255,255,255,0.018), rgba(255,255,255,0.01));
+  border-radius: 22px;
+  padding: 12px 14px;
+  border: 1px solid rgba(255,255,255,0.03);
+  box-shadow: 0 12px 28px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,255,255,0.02);
+}
+
+/* plus on left */
+.pill-plus {
+  width: 36px; height: 36px;
+  border-radius: 10px;
+  background: transparent;
+  border: none;
+  color: var(--muted);
+  font-size: 20px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* input style */
+.pill-input {
+  background: transparent;
+  border: none;
+  outline: none;
+  color: var(--muted);
+  font-size: 16px;
+  flex: 1;
+}
+
+/* right-side small icons */
+.pill-right { display: inline-flex; gap: 8px; align-items: center; }
+.icon-btn {
+  width: 36px; height: 36px;
+  border-radius: 9999px;
+  border: 1px solid rgba(255,255,255,0.03);
+  background: rgba(255,255,255,0.02);
+  color: var(--text);
+  display: inline-flex;
+  align-items:center;
+  justify-content:center;
+}
+
+/* send circle (white-filled like screenshots) */
+.icon-btn.send {
+  background: linear-gradient(90deg,var(--accent-orange),var(--accent-orange-2));
+  color: white;
+  box-shadow: 0 8px 26px var(--accent-glow);
+  width: 44px; height: 44px;
+  border-radius: 9999px;
+  border: none;
+}
+
+/* floating action button */
+.fab {
+  width: 56px; height: 56px;
+  border-radius: 9999px;
+  background: linear-gradient(90deg,var(--accent-orange),var(--accent-orange-2));
+  color: white;
+  border: none;
+  box-shadow: 0 18px 40px var(--accent-glow);
+  font-size: 22px;
+  display: inline-flex;
+  align-items:center;
+  justify-content:center;
+}
+
+/* bottom sheet / menu styles tweaks */
+.menu-overlay .menu-sheet {
+  border-top-left-radius: 28px;
+  border-top-right-radius: 28px;
+  background: linear-gradient(180deg, rgba(12,11,12,0.98), rgba(14,13,14,0.995));
+  border: 1px solid rgba(255,255,255,0.02);
+}
+
+/* responsive */
+@media (max-width:520px) {
+  .hero-title { font-size: 26px; padding: 0 18px; }
+  .composer-pill { width: calc(100% - 76px); padding: 10px; border-radius: 20px; }
+  .fab { width: 52px; height: 52px; }
+}

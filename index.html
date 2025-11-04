@@ -3,90 +3,66 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
-  <!-- Make PWA behave like an app on iOS -->
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
   <title>PWA with Nav</title>
 
-  <style>
-    :root {
-      --nav-height: 56px; /* visible nav height (not counting safe-area) */
-    }
-
-    /* safe-area helpers for iOS (use constant() for very old iOS) */
-    .app-nav {
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      height: calc(var(--nav-height) + env(safe-area-inset-top));
-      padding-top: env(safe-area-inset-top);
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 12px;
-      padding-inline: 12px;
-      background: linear-gradient(#fff, #f7f7f7);
-      box-shadow: 0 1px 0 rgba(0,0,0,0.06);
-      z-index: 9999;
-      -webkit-backdrop-filter: blur(6px);
-      backdrop-filter: blur(6px);
-      pointer-events: auto;
-    }
-
-    /* push page content below the nav when in standalone mode */
-    body.standalone {
-      padding-top: calc(var(--nav-height) + env(safe-area-inset-top));
-    }
-
-    /* fallback for browsers that don't support env() (keeps reasonable spacing) */
-    @supports not (padding-top: env(safe-area-inset-top)) {
-      .app-nav { height: var(--nav-height); padding-top: 0; }
-      body.standalone { padding-top: var(--nav-height); }
-    }
-
-    /* simple content area */
-    main {
-      min-height: 200vh;
-      padding: 16px;
-    }
-
-    .nav-title { font-weight: 600; font-size: 18px; }
-    .nav-btn { background: none; border: none; font-size: 30px; }
-  </style>
+  <!-- link external CSS -->
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
+
   <header class="app-nav" role="navigation" aria-label="Main navigation">
-    <button class="nav-btn" aria-label="Back">‹</button>
-    <div class="nav-title">App Title</div>
-    <button class="nav-btn" aria-label="Menu">☰</button>
+    <button class="nav-btn" aria-label="Back">☰</button>
+    <div class="nav-title">Sonnet 4.5</div>
+    <button class="nav-btn" aria-label="Menu">👻</button>
   </header>
 
   <main>
-    <h1>Placeholder</h1>
-    <p>Page content goes here. When the PWA is installed to Home Screen on iOS, the nav will respect the notch and status bar safe area.</p>
+    <!-- decorative orange star like Claude's -->
+    <div class="hero">
+      <div class="hero-star" aria-hidden="true">
+        <!-- small star/flower svg -->
+        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path d="M12 2l1.7 4.7L18 8l-4 2.6L14 16l-2-2.6L10 16l.1-5.4L6 8l4.3-1.3L12 2z" fill="none" stroke="none"/>
+          <!-- fallback: a simple radial shape via path strokes -->
+          <g transform="translate(12,12)">
+            <g stroke="var(--accent-orange)" stroke-width="2" stroke-linecap="round">
+              <path d="M0 -7 L0 -12" transform="rotate(0)"/>
+              <path d="M0 -7 L0 -12" transform="rotate(36)"/>
+              <path d="M0 -7 L0 -12" transform="rotate(72)"/>
+              <path d="M0 -7 L0 -12" transform="rotate(108)"/>
+              <path d="M0 -7 L0 -12" transform="rotate(144)"/>
+              <path d="M0 -7 L0 -12" transform="rotate(180)"/>
+              <path d="M0 -7 L0 -12" transform="rotate(216)"/>
+              <path d="M0 -7 L0 -12" transform="rotate(252)"/>
+              <path d="M0 -7 L0 -12" transform="rotate(288)"/>
+              <path d="M0 -7 L0 -12" transform="rotate(324)"/>
+            </g>
+          </g>
+        </svg>
+      </div>
+
+      <h1 class="hero-title">How can I help you this evening?</h1>
+    </div>
+
+    <p class="lead">Page content goes here. When the PWA is installed to Home Screen on iOS, the nav will respect the notch and status bar safe area.</p>
   </main>
 
-  <script>
-    // Detect standalone/display-mode (iOS uses window.navigator.standalone, others use display-mode)
-    function isStandalone() {
-      return window.matchMedia && window.matchMedia('(display-mode: standalone)').matches
-             || window.navigator.standalone === true;
-    }
+  <!-- bottom pill input + fab -->
+  <div class="composer">
+    <div class="composer-pill" role="search" aria-label="Chat input">
+      <button class="pill-plus" aria-label="Add">+</button>
+      <input class="pill-input" placeholder="Chat with Claude" aria-label="Chat input field">
+      <div class="pill-right">
+        <button class="icon-btn" aria-label="Voice">🎤</button>
+        <button class="icon-btn send" aria-label="Send">⦿</button>
+      </div>
+    </div>
+    <button class="fab" aria-label="New chat">＋</button>
+  </div>
 
-    if (isStandalone()) {
-      document.body.classList.add('standalone');
-    } else {
-      // If you want the same spacing in Safari tab mode, uncomment:
-      // document.body.classList.add('standalone');
-    }
-
-    // Optional: listen for when display-mode changes (useful during dev)
-    window.addEventListener('DOMContentLoaded', () => {
-      window.matchMedia && window.matchMedia('(display-mode: standalone)').addEventListener('change', e => {
-        document.body.classList.toggle('standalone', e.matches);
-      });
-    });
-  </script>
+  <!-- menu sheet will be created by scripts.js -->
+  <script src="scripts.js" defer></script>
 </body>
 </html>
